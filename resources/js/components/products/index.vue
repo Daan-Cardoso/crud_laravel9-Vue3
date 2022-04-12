@@ -17,7 +17,7 @@ const ourImage = (image) => {
 };
 
 const newProduct = () => {
-  router.push('/product/new');
+  router.push("/product/new");
 };
 
 onMounted(async () => {
@@ -35,7 +35,9 @@ onMounted(async () => {
           <h1 class="my-1">Products</h1>
         </div>
         <div class="customers__titlebar--item">
-          <button class="btn btn-secondary my-1" @click="newProduct">Add Product</button>
+          <button class="btn btn-secondary my-1" @click="newProduct">
+            Add Product
+          </button>
         </div>
       </div>
 
@@ -67,9 +69,9 @@ onMounted(async () => {
             style="height: 40px"
           />
         </div>
-        <a href="# " class="table--items--col2"> [[item.name]] </a>
-        <p class="table--items--col2">[[item.type]]</p>
-        <p class="table--items--col3">[[item.quantity]]</p>
+        <a href="# " class="table--items--col2"> {{ item.name }} </a>
+        <p class="table--items--col2">{{ item.type }}</p>
+        <p class="table--items--col3">{{ item.quantity }}</p>
         <div>
           <button class="btn-icon btn-icon-success">
             <i class="fas fa-pencil-alt"></i>
