@@ -1,19 +1,41 @@
+<script setup>
+import { onMounted, ref } from "vue";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+let products = ref([]);
+
+const getProducts = async () => {
+  let response = await axios.get("api/get_all_product");
+
+  products.value = response.data.products;
+  console.log("response", products.value);
+};
+
+const ourImage = (image) => {
+  return `/upload/${image}`;
+};
+
+const newProduct = () => {
+  router.push('/product/new');
+};
+
+onMounted(async () => {
+  getProducts();
+});
+</script>
+
 <template>
   <div class="container">
     <div class="products__list table my-3">
       <div
-        class="
-          customers__titlebar
-          dflex
-          justify-content-between
-          align-items-center
-        "
+        class="customers__titlebar dflex justify-content-between align-items-center"
       >
         <div class="customers__titlebar--item">
           <h1 class="my-1">Products</h1>
         </div>
         <div class="customers__titlebar--item">
-          <button class="btn btn-secondary my-1">Add Product</button>
+          <button class="btn btn-secondary my-1" @click="newProduct">Add Product</button>
         </div>
       </div>
 
@@ -31,17 +53,23 @@
       </div>
 
       <!-- product 1 -->
-      <div class="table--items products__list__item">
+      <div
+        class="table--items products__list__item"
+        v-if="products.length > 0"
+        v-for="item in products"
+        :key="item.id"
+      >
         <div class="products__list__item--imgWrapper">
           <img
             class="products__list__item--img"
-            src="1.jpg"
+            v-if="item.photo"
+            :src="ourImage(item.photo)"
             style="height: 40px"
           />
         </div>
-        <a href="# " class="table--items--col2"> Product name </a>
-        <p class="table--items--col2">type</p>
-        <p class="table--items--col3">10</p>
+        <a href="# " class="table--items--col2"> [[item.name]] </a>
+        <p class="table--items--col2">[[item.type]]</p>
+        <p class="table--items--col3">[[item.quantity]]</p>
         <div>
           <button class="btn-icon btn-icon-success">
             <i class="fas fa-pencil-alt"></i>
@@ -50,6 +78,9 @@
             <i class="far fa-trash-alt"></i>
           </button>
         </div>
+      </div>
+      <div class="table--items products__list__item" v-else>
+        <p>Product not found</p>
       </div>
     </div>
   </div>
