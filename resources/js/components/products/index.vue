@@ -20,6 +20,10 @@ const newProduct = () => {
   router.push("/product/new");
 };
 
+const onEdit = (id) => {
+  router.push(`/product/edit/${id}`);
+}
+
 onMounted(async () => {
   getProducts();
 });
@@ -73,7 +77,7 @@ onMounted(async () => {
         <p class="table--items--col2">{{ item.type }}</p>
         <p class="table--items--col3">{{ item.quantity }}</p>
         <div>
-          <button class="btn-icon btn-icon-success">
+          <button class="btn-icon btn-icon-success" @click="onEdit(item.id)">
             <i class="fas fa-pencil-alt"></i>
           </button>
           <button class="btn-icon btn-icon-danger">
