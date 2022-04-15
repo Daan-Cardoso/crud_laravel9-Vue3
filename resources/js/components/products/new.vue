@@ -13,7 +13,7 @@ let form = ref({
   price: "",
 });
 
-const updateImage = (event) => {
+const updatePhoto = (event) => {
   const file = event.target.files[0];
   let reader = new FileReader();
   let limit = 1024 * 1024 * 2;
@@ -136,7 +136,7 @@ const resetForm = () => {
                       class="products__create__main--media--images--item--form--input"
                       type="file"
                       id="myfile"
-                      @change="updateImage"
+                      @change="updatePhoto"
                     />
                   </form>
                 </li>

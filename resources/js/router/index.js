@@ -8,7 +8,7 @@ import notFound from "../components/notFound.vue";
 const routes = [
     { path: "/", component: productIndex },
     { path: "/product/new", component: productNew },
-    { path: "/product/edit/:id", component: productEdit },
+    { path: "/product/edit/:id", component: productEdit, props: true },
     { path: "/:pathMatch(.*)*", component: notFound },
 ];
 
