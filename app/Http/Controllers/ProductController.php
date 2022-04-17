@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
-use Image;
+use Intervention\Image\ImageManagerStatic as Image;
 
 class ProductController extends Controller
 {
@@ -77,5 +77,16 @@ class ProductController extends Controller
         $product->quantity = $request->quantity;
         $product->price = $request->price;
         $product->save();
+    }
+
+    public function delete_product($id)
+    {
+        $product = Product::findOrFail($id);
+        $image_path = public_path() . "/upload/";
+        $image = $image_path . $product->photo;
+        if(file_exists($image)){
+            @unlink($image);
+        }
+        $product->delete();
     }
 }

@@ -6,7 +6,7 @@ const router = useRouter();
 let products = ref([]);
 
 const getProducts = async () => {
-  let response = await axios.get("api/get_all_product");
+  let response = await axios.get("/api/get_all_product");
 
   products.value = response.data.products;
   console.log("response", products.value);
@@ -22,7 +22,32 @@ const newProduct = () => {
 
 const onEdit = (id) => {
   router.push(`/product/edit/${id}`);
-}
+};
+
+const delectProduct = async (id) => {
+  Swal.fire({
+    title: "Are you sure?",
+    text: "You can't go back!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    confirmButtonText: "Yes, delete it!",
+    cancelButtonColor: "#d33",
+    cancelButtonText: "No, cancel!",
+  }).then((result) => {
+    if (result.value) {
+      axios
+        .get(`/api/delete_product/${id}`)
+        .then(() => {
+          Swal.fire("Delete", "Product delete successfully", "success");
+          getProducts();
+        })
+        .catch(() => {
+          Swal.fire("Failed", "There was something wrong", "warning");
+        });
+    }
+  });
+};
 
 onMounted(async () => {
   getProducts();
@@ -80,12 +105,15 @@ onMounted(async () => {
           <button class="btn-icon btn-icon-success" @click="onEdit(item.id)">
             <i class="fas fa-pencil-alt"></i>
           </button>
-          <button class="btn-icon btn-icon-danger">
+          <button
+            class="btn-icon btn-icon-danger"
+            @click="delectProduct(item.id)"
+          >
             <i class="far fa-trash-alt"></i>
           </button>
         </div>
       </div>
-      <div class="table--items products__list__item" v-else>
+      <div class="table--items products__list__item not-found" v-else>
         <p>Product not found</p>
       </div>
     </div>

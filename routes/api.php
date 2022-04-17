@@ -13,3 +13,4 @@ Route::get('/get_all_product', [ProductController::class, 'get_all_product']);
 Route::post('/add_product', [ProductController::class, 'add_product']);
 Route::get('/get_single_product/{id}', [ProductController::class, 'get_single_product']);
 Route::post('/update_product/{id}', [ProductController::class, 'update_product']);
+Route::get('/delete_product/{id}', [ProductController::class, 'delete_product']);
